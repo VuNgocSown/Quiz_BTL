@@ -1,0 +1,36 @@
+{% extends "baseQuan.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'search/css/search_history.css' %}">
+<div class="history-container">
+    <h2 class="history-title">Lịch sử tìm kiếm của bạn</h2>
+    
+    {% if history %}
+        <ul class="history-list">
+            {% for entry in history %}
+                <li class="history-item">
+                    <div class="history-entry">
+                        <div class="history-details">
+                            <span class="query-text">Từ khóa: <strong>{{ entry.query }}</strong></span>
+                        </div>
+                        <div class="timestamp-container">
+                            <span class="timestamp">Vào lúc: {{ entry.timestamp|date:"d/m/Y H:i" }}</span>
+                        </div>
+                        <div class="view-link-container">
+                            <a href="{% url 'search' class_id %}?q={{ entry.query }}" class="view-link">Xem kết quả</a>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-history">Bạn chưa có lịch sử tìm kiếm nào.</p>
+    {% endif %}
+
+    <div class="back-to-search">
+        <button onclick="window.history.back();" class="btn btn-primary">Quay lại trang tìm kiếm</button>
+    </div>
+</div>
+{% endblock %}

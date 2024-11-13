@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %} List Forum {% endblock %}
+{% block content %}
+<div class="container my-5">
+  <div class="jumbotron p-4">
+    <h1 class="text-center my-5">Forum</h1>
+    <div class="d-flex justify-content-between mb-4">
+      <a href="{% url 'forum-add' %}" class="btn btn-success">Add New Post</a>
+      <form method="GET" action="{% url 'forum-search' %}" class="d-flex">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search forums..." value="{{ request.GET.q }}">
+          <button class="btn btn-success" type="submit">Search</button>
+        </div>
+      </form>
+    </div>
+    <div class="list-group">
+        {% for forum in object_list %}
+            <a href="{% url 'forum-detail' forum.slug %}" class="list-group-item list-group-item-action mb-2">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ forum.title }}</h5>
+                    <small class="text-muted">{{ forum.created_at|naturaltime }}</small>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    {% include 'pagination.html' %}
+  </div>
+</div>
+{% endblock %}
+{% comment %} {% extends "base.html" %}
+{% load humanize %}
+
+{% block title %} List Forum{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="jumbotron p-4">
+    <h1 class="text-center my-5">Forum</h1> 
+    <a href="{% url 'forum-add' %}" class="btn btn-success mb-3">Add New Post</a>
+    <div class="list-group">
+        {% for forum in object_list %}
+            <a href="{% url 'forum-detail' forum.slug %}" class="list-group-item list-group-item-action mb-2">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ forum.title }}</h5>
+                    <small class="text-muted">{{ forum.created_at|naturaltime }}</small>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    {% include 'pagination.html' %}
+  </div>
+</div>
+{% endblock %} {% endcomment %}

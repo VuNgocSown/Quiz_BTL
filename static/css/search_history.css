@@ -1,0 +1,87 @@
+/* Tổng thể của trang lịch sử */
+.history-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề */
+.history-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #2c3e50;
+}
+
+/* Danh sách lịch sử */
+.history-list {
+    list-style: none;
+    padding: 0;
+}
+
+.history-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.history-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.history-details {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.query-text {
+    font-size: 16px;
+    color: #34495e;
+    flex: 1; /* Adjust flex value as needed */
+}
+
+.timestamp {
+    font-size: 14px;
+    color: #7f8c8d;
+    text-align: left;
+    flex: 1;  /* Adjust flex value as needed */
+}
+
+/* Không có lịch sử */
+.no-history {
+    text-align: center;
+    font-size: 18px;
+    color: #95a5a6;
+}
+
+/* Nút quay lại */
+.back-to-search {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+.view-link {
+    flex: 1;
+    text-align: right; /* Ensure link stays aligned to the right */
+}

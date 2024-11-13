@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %} List Forum{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="jumbotron p-4">
+    <h1 class="text-center my-5">The author's article has been searched</h1>
+    <div class="list-group">
+        {% for forum in object_list %}
+            <a href="{% url 'forum-detail' forum.slug %}" class="list-group-item list-group-item-action mb-3 p-3 border rounded">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ forum.title }}</h5>
+                <small class="text-muted">{{ forum.created_at|naturaltime }}</small>
+            </div>
+            </a>
+        {% endfor %}
+    </div>
+    {% include 'pagination.html' %}
+  </div>
+</div>
+{% endblock %}

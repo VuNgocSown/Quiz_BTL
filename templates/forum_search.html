@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="jumbotron p-4">
+    <h1 class="text-center my-5">Search Results</h1>
+    {% if query %}
+      <p>Results for "{{ query }}":</p>
+      <ul class="list-group">
+        {% for forum in results %}
+          <a href="{% url 'forum-detail' forum.slug %}" class="list-group-item list-group-item-action mb-2">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ forum.title }}</h5>
+              <small class="text-muted">{{ forum.created_at|naturaltime }}</small>
+            </div>
+          </a>
+        {% endfor %}
+      </ul>
+      {% include 'pagination_search.html' with page_obj=results query=query %}
+      <a href="{% url 'forum-list' %}" class="btn btn-success mt-3">Back to Forum List</a>
+    {% else %}
+      <p>No results found.</p>
+      <a href="{% url 'forum-list' %}" class="btn btn-success mt-3">Back to Forum List</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+{% comment %} {% extends "base.html" %}
+{% load humanize %}
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="jumbotron p-4">
+    <h1 class="text-center my-5">Search Results</h1>
+    {% if query %}
+      <p>Results for "{{ query }}":</p>
+      <ul class="list-group">
+        {% for forum in results %}
+          <a href="{% url 'forum-detail' forum.slug %}" class="list-group-item list-group-item-action mb-2">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ forum.title }}</h5>
+              <small class="text-muted">{{ forum.created_at|naturaltime }}</small>
+            </div>
+          </a>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'forum-list' %}" class="btn btn-success mt-3">Back to Forum List</a>
+    {% else %}
+      <p>No results found.</p>
+      <a href="{% url 'forum-list' %}" class="btn btn-success mt-3">Back to Forum List</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %} {% endcomment %}

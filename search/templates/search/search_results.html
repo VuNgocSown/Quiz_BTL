@@ -1,0 +1,83 @@
+{% extends "baseQuan.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet"  href="{% static 'search/css/search.css' %}">
+<div class="search-container">
+    <h3 class="search-title">
+        Kết quả tìm kiếm cho từ khoá <span class="highlight-query">{{ query }}</span>
+    </h3>
+    <div class="history-link">
+        <a href="{% url 'search_history' class_id %}" class="btn btn-secondary">Xem lịch sử tìm kiếm</a>
+    </div>
+    {% if no_results_message %}
+        <p class="no-results-message">{{ no_results_message }}</p>
+    {% endif %}
+
+    {% if suggestion and not results.subject %}
+        <p class="suggestion-text">Hiển thị tìm kiếm với từ khóa "<a href="?q={{ suggestion }}">{{ suggestion }}</a>"</p>
+    {% endif %} 
+
+    <!-- Bộ lọc loại nội dung -->
+    <div class="filter-options">            
+        <form method="get" action="{% url 'search' class_id %}" id="filterForm">
+            <input type="hidden" name="q" value="{{ query }}">
+                <select name="content_type" class="filter-select" onchange="document.getElementById('filterForm').submit();">
+                    <option value="all" {% if content_type == 'all' or not content_type %}selected{% endif %}>all</option>
+                    <option value="document" {% if content_type == 'document' %}selected{% endif %}>document</option>
+                    <option value="quiz" {% if content_type == 'quiz' %}selected{% endif %}>quiz</option>
+                </select>
+            </form>
+        </div>
+
+    <!-- Kết quả tìm kiếm dạng lưới -->
+    <div class="result-grid">
+        {% for item in results %}
+            <div class="result-card">
+                <div class="card-image">
+                    {% if item.get_type == 'document' %}
+                        <img src="{% static 'search/images/material_placeholder.png' %}" alt="document">
+                    {% else %}
+                        <img src="{% static 'search/images/default_placeholder.png' %}" alt="Default">
+                    {% endif %}
+                </div>
+                <div class="card-content">
+                    <h3 class="result-title">{{ item.title }}</h3>
+                    <p class="result-description">{{ item.description }}</p>
+                    <p class="result-type">{{ item.get_type }}
+                </div>
+                <div class="card-link">
+                    {% if item.get_type == 'quiz' %}
+                        <a href="{% url 'start_quiz' item.id %}" class="view-link">start quiz</a>
+                    {% else %}
+                        <a href="" class="view-link">view</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    
+
+    
+    
+    
+    
+    
+
+    <!-- Phân trang -->
+    <div class="pagination">
+        {% if results.has_previous %}
+            <a href="?q={{ query }}&content_type={{ content_type }}&page=1">Đầu</a>
+            <a href="?q={{ query }}&content_type={{ content_type }}&page={{ results.previous_page_number }}">Trước</a>
+        {% endif %}
+        <span>{{ results.number }}</span>
+        {% if results.has_next %}
+            <a href="?q={{ query }}&content_type={{ content_type }}&page={{ results.next_page_number }}">Sau</a>
+            <a href="?q={{ query }}&content_type={{ content_type }}&page={{ results.paginator.num_pages }}">Cuối</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

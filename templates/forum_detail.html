@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+
+{% block title %} {{object.title}} {% endblock %}
+{% block content %}
+<div class="container my-5">
+  <div class="jumbotron p-4">
+    <h1 class="display-4">{{object.title}}</h1>
+    {% if request.user == object.user %} 
+    <div class="d-flex justify-content-end mb-3">
+      <a href="{% url 'forum-edit' object.id %}" class="btn btn-warning me-2">Edit</a>
+      <form method="post" action="{% url 'forum-delete' object.id %}" style="display:inline;">
+        {% csrf_token %} 
+        <input type="submit" value="Delete" class="btn btn-danger">
+      </form>
+    </div>
+    {% endif %}
+    <p class="lead">{{ object.desc }}</p>
+    <p class="text-muted">- <i>{{object.created_at | naturaltime}}</i></p>
+    <p class="text-muted">by <a href="{% url 'forum-by' object.user %}">{{ object.user }}</a></p>
+    <hr>
+    <h3>Bình luận</h3>
+    <div class="comments-section mb-4">
+      {% for comment in parent_comments %}
+        {% include "comment.html" with comment=comment %}
+      {% endfor %}
+    </div>
+    <form method="post" action="{% url 'add-comment' forum.id %}">
+      {% csrf_token %}
+      <textarea name="desc" class="form-control mb-2" rows="3" placeholder="Enter your comment"></textarea>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% comment %} {% extends "base.html" %}
+
+{% load humanize %}
+
+{% block title %} {{object.title}} {% endblock %}
+{% block content %}
+<div class="container my-5">
+  <div class="jumbotron p-4">
+    <h1 class="display-4">{{object.title}}</h1>
+    {% if request.user == object.user %} 
+    <div class="d-flex justify-content-end mb-3">
+      <a href="{% url 'forum-edit' object.id %}" class="btn btn-warning me-2">Edit</a>
+      <form method="post" action="{% url 'forum-delete' object.id %}" style="display:inline;">
+        {% csrf_token %} 
+        <input type="submit" value="Delete" class="btn btn-danger">
+      </form>
+    </div>
+    {% endif %}
+    <p class="lead">{{ object.desc }}</p>
+    <p class="text-muted">- <i>{{object.created_at | naturaltime}}</i></p>
+    <p class="text-muted">by <a href="{% url 'forum-by' object.user %}">{{ object.user }}</a></p>
+    <hr>
+    <h3>Bình luận</h3>
+    <div class="comments-section mb-4">
+      {% for comment in parent_comments %}
+        <div class="comment mb-3 p-3 border rounded">
+          <p>{{ comment.desc }}</p>
+          <p class="text-muted mb-1" style="font-size: 12px;"><i>by {{ comment.user }}</i></p>
+          <p class="text-muted" style="font-size: 12px;"><i>{{ comment.created_at | naturaltime }}</i></p>
+          {% if request.user == comment.user %}
+          <div class="d-flex justify-content-end">
+            <a href="{% url 'edit-comment' comment.id %}" class="btn btn-sm btn-warning me-2">Edit</a>
+            <form method="post" action="{% url 'delete-comment' comment.id %}" style="display:inline;">
+              {% csrf_token %}
+              <input type="submit" value="Delete" class="btn btn-sm btn-danger">
+            </form>
+          </div>
+          {% endif %}
+          <div class="d-flex justify-content-end">
+            <a href="#" class="btn btn-sm btn-primary me-2" onclick="document.getElementById('reply-form-{{ comment.id }}').style.display='block'">Reply</a>
+          </div>
+          <div id="reply-form-{{ comment.id }}" style="display:none;">
+            <form method="post" action="{% url 'add-comment' forum.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="parent_id" value="{{ comment.id }}">
+              <textarea name="desc" class="form-control mb-2" rows="2" placeholder="Enter your reply"></textarea>
+              <button type="submit" class="btn btn-sm btn-success">Submit</button>
+            </form>
+          </div>
+          <div class="replies">
+            {% for reply in comment.replies.all %}
+              <div class="reply mb-3 p-3 border rounded">
+                <p>{{ reply.desc }}</p>
+                <p class="text-muted mb-1" style="font-size: 12px;"><i>by {{ reply.user }}</i></p>
+                <p class="text-muted" style="font-size: 12px;"><i>{{ reply.created_at | naturaltime }}</i></p>
+                {% if request.user == reply.user %}
+                <div class="d-flex justify-content-end">
+                  <a href="{% url 'edit-comment' reply.id %}" class="btn btn-sm btn-warning me-2">Edit</a>
+                  <form method="post" action="{% url 'delete-comment' reply.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete" class="btn btn-sm btn-danger">
+                  </form>
+                </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="add-comment-section">
+      <form method="post" action="{% url 'add-comment' forum.id %}">
+        {% csrf_token %}
+        <textarea name="desc" class="form-control mb-2" rows="3" placeholder="Thêm bình luận..."></textarea>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %} {% endcomment %}

@@ -1,0 +1,151 @@
+/* Tổng thể của trang */
+body {
+    background-color: #f7f8fa;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Container tổng thể */
+.search-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.search-title {
+    font-size: 18px;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Bộ lọc */
+.filter-options {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.highlight-query {
+    color: red; /* Bôi đỏ từ khóa tìm kiếm */
+    font-weight: bold; /* Làm nổi bật từ khóa */
+}
+.filter-options form {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-options label {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Bố cục lưới cho các thẻ */
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 thẻ mỗi hàng */
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Thẻ kết quả */
+.result-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Ảnh thẻ */
+.card-image {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Nội dung thẻ */
+.card-content {
+    padding: 10px;
+}
+
+/* Tiêu đề kết quả */
+.result-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0;
+}
+
+/* Mô tả kết quả */
+.result-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+/* Liên kết xem chi tiết */
+.view-link {
+    font-size: 14px;
+    color: #3498db;
+    text-decoration: none;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+}
+
+.view-link:hover {
+    background-color: #3498db;
+    color: #fff;
+}
+
+/* Phân trang */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.pagination a,
+.pagination span {
+    padding: 8px 12px;
+    color: #3498db;
+    text-decoration: none;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.pagination span {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+}
